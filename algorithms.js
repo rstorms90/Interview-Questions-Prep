@@ -7,6 +7,16 @@ function fib(n) {
 }
 
 // String Reversal (If .reverse() isn't usable)
+function reverseStr(str) {
+  let reversed = ''
+
+  for (let char of str) {
+    reversed = char + reversed
+  }
+  return reversed
+}
+
+// Another Solution (we gettin' fancy)
 function reverse(str) {
   return str.split('').reduce((rev, char) => char + rev, '')
 }
@@ -171,3 +181,124 @@ function pyramid(n) {
     console.log(level)
   }
 }
+
+//Recursive Solution
+function pyramid(n, row = 0, level = '') {
+  if (row === n) {
+    return
+  }
+  const midpoint = Math.floor((2 * n -1 ) / 2)
+  let add
+  if (midpoint - row <= level.length && midpoint + row >= level.length) {
+    add = '#'
+  } else {
+    add = ' '
+  }
+  pyramid(n, row, level + add)
+}
+
+//Find Vowels in String
+function vowels(str) {
+  let count = 0
+  const checker = ['a', 'e', 'i', 'o', 'u']
+
+  for ( let char of str.toLowerCase()) {
+    if (checker.includes(char)) {
+      count++
+    }
+  }
+  return count
+}
+
+//Find Vowels (Second solution)
+function vowels(str) {
+  const matches = str.match(/[aeiou]/gi)
+  return matches ? matches.length : 0
+}
+
+//Matrix Spiral
+// matrix(4)
+// [[1, 2, 3, 4],
+// [12, 13, 14, 5],
+// [11, 16, 15, 6],
+// [10, 9, 8, 7]
+// ]
+function matrix(n) {
+  const results = []
+
+  for(let i = 0; i < n; i++) {
+    results.push([])
+  }
+
+  let counter = 1
+  let startColumn = 0
+  let endColumn = n - 1
+  let startRow = 0
+  let endRow = n - 1
+  while (startColumn <= endColumn && startRow <= endRow) {
+    //Top Row
+    for (let i = startColumn; i <= endColumn; i++) {
+      results[startRow][i] = counter
+      counter++
+    }
+    startRow++
+
+    //Right Column
+    for (let i = startRow; i <= endRow; i++) {
+      results[i][endColumn] = counter
+      counter++
+    }
+    endColumn--
+
+    //Bottom Row
+    for (let i = endColumn; i >= startColumn; i--) {
+      results[endRow][i] = counter
+      counter++
+    }
+    endRow--
+
+    //Start Column
+    for (let i = endRow; i >= startRow; i--) {
+      results[i][startColumn] = counter
+      counter++
+    }
+    startColumn++
+  }
+  return results
+}
+
+//Fibonacci (Iterative Soution)
+function fib(n) {
+  const result = [1, 2]
+
+  for (let i = 2; i < n; i++) {
+    const a = result[n - 1]
+    const b = result[n - 2]
+
+    results.push(a + b)
+  }
+
+  return result[n]
+}
+
+//Memoization of Fibonacci
+function memoize(fn) {
+  const cache = {}
+  return function(...args){
+    if (cache[args]) {
+      return cache[args]
+    }
+
+    const result = fn.apply(this, args)
+  }
+}
+
+function slowFib(n) {
+  if (n < 2) {
+    return n
+  }
+
+  return fib(n - 1) + fib(n - 2)
+}
+
+const fib = memoize(slowFib)
