@@ -302,3 +302,22 @@ function slowFib(n) {
 }
 
 const fib = memoize(slowFib)
+
+//Queues
+  //create -> const q = new Queue()
+  //Add -> q.add(1)
+  //Remove - > q.remove()
+
+class Queue {
+  constructor() {
+    this.data = []
+  }
+
+  add(record) {
+    this.data.unshift(record)
+  }
+
+  remove() {
+    return this.data.pop()
+  }
+}
